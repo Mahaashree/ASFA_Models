@@ -13,7 +13,7 @@ A sophisticated real-time face authentication system featuring multi-layer secur
 - **🛡️ Presentation Attack Detection**: Deep learning model to detect fake faces, printed photos, and video replays
 - **👁️ Interactive Liveness Verification**: Cue-based system ensuring real human presence
 - **💾 Scalable User Management**: MongoDB integration with secure encoding storage
-- **🖥️ Multiple Interfaces**: CLI, Desktop GUI, and Web UI options
+- **🖥️ Multiple Interfaces**: CLI and Web UI options
 - **⚡ Real-time Processing**: Optimized for live camera feed analysis
 - **🔧 Configurable Security**: Adjustable thresholds for different security requirements
 
@@ -24,7 +24,6 @@ A sophisticated real-time face authentication system featuring multi-layer secur
 | **Computer Vision** | OpenCV, face_recognition |
 | **Deep Learning** | TensorFlow/Keras |
 | **Database** | MongoDB |
-| **UI Framework** | Streamlit, Tkinter |
 | **Backend** | Python 3.8+ |
 
 ## 🚀 Quick Start
@@ -189,9 +188,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-**Your Name** - [your.email@example.com](mailto:your.email@example.com)
+**Mahaashree Anburaj** - [mahaashreofficial@gmail.com](mailto:mahaashreeofficial@gmail.com)
 
-Project Link: [https://github.com/yourusername/face-auth-system](https://github.com/yourusername/face-auth-system)
 
 ---
 

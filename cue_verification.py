@@ -11,8 +11,8 @@ shape_predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 class CueVerification:
     def __init__(self):
         self.cues = [
-            {"command": "Please look left", "duration": 10, "verified": False, "attempts": 0},
             {"command": "Please look right", "duration": 10, "verified": False, "attempts": 0},
+            {"command": "Please look left", "duration": 10, "verified": False, "attempts": 0},
             {"command": "Please blink slowly", "duration": 10, "verified": False, "attempts": 0},
             {"command": "Please smile", "duration": 10, "verified": False, "attempts": 0}
 

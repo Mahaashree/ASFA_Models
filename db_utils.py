@@ -48,7 +48,7 @@ class MongoDBUtils:
         return self.users_collection.find_one({'name':name})
     
 
-    def register(self, name, img_path):
+    def register(self, name, img_path, access_level):
         try:
             #loading img
             img = fr.load_image_file(img_path)

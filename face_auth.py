@@ -106,8 +106,11 @@ class FaceAuth:
         return spoof_ratio > self.spoof_confidence
     
   
+    import os
+    import uuid
+
     def live_auth(self, target_name, tolerance=0.45):
-    # Initialize cue verification
+        # Initialize cue verification
         cue_verification = CueVerification()
 
         # Opening camera
@@ -115,7 +118,7 @@ class FaceAuth:
         cv2.waitKey(2)
 
         # Auth rules
-        max_attempts = 70
+        max_attempts = 50
         attempts = 0
         cue_completed = False
         spoof_history = deque(maxlen=self.frame_history)
@@ -131,96 +134,54 @@ class FaceAuth:
             face_loc = fr.face_locations(rgb_frame)
 
             if face_loc:
-                #1. check spoof
-
+                # 1. Check spoof
                 is_real = self.check_spoof(frame)
                 spoof_history.append(is_real)
 
-                #checking spoof ratio if we have enough frames
+                # Checking spoof ratio if we have enough frames
                 if len(spoof_history) == self.frame_history:
                     spoof_ratio = spoof_history.count(False) / len(spoof_history)
-                    print(f"Spoof ratio in live_auth: {spoof_ratio*100:.2f}")
                     if spoof_ratio > self.spoof_confidence:
-                        print(f"Spoofing detected!: {spoof_ratio *100:.2f}% frame of spoof")
                         cap.release()
-                        cv2.destroyAllWindows()
                         return False
 
-                # 2. Cue Verification 
+                # 2. Cue Verification
                 if not cue_completed:
-
                     cue_in_progress, current_cue = cue_verification.run_verification(frame)
-                    
-                    # Display current cue
-                    if current_cue:
-                        cv2.putText(frame, current_cue, (50, 50), 
-                                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
-                    
+
                     # Check if cue verification is complete
                     if not cue_in_progress:
                         cue_completed = True
-                        print("Cue verification completed successfully")
-              
-                    
-                
+
                 if cue_completed:
                     # 3. Live Auth
-                    # Finding face locations and encodings in frame
-                    
                     face_encoding = fr.face_encodings(rgb_frame, face_loc)
 
-                    # Processing each face
                     for (top, right, bottom, left), face_encoding in zip(face_loc, face_encoding):
                         name = "unknown"
                         access_granted = False
 
-                        # Checking if target user is in known encoding
                         if target_name in self.authorized_users:
-                            # Compare with specific user's encoding
                             matches = fr.compare_faces(
                                 [self.authorized_users[target_name]['encoding']],
                                 face_encoding,
                                 tolerance=tolerance
                             )
 
-                            print(f"Face match: {matches[0]}")
-
-                            # Verifying identity
                             if matches[0]:
                                 name = target_name
                                 access_granted = True
-                                print(f"Access granted to {target_name}")
 
-                                # Adding visuals for access granted
-                                cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 3)
-                                cv2.putText(frame, f"Access Granted for {name}!",
-                                            (left, top-10), cv2.FONT_HERSHEY_SIMPLEX, 
-                                            0.9, (0, 255, 0), 2)
-                                
+                                # Save the frame as an image
+                                image_path = os.path.join("static", f"{uuid.uuid4().hex}.jpg")
+                                cv2.imwrite(image_path, frame)
+
                                 cap.release()
-                                cv2.destroyAllWindows()
-                                return True
+                                return {"success": True, "image_path": image_path}
 
-                        # Draw rectangle and name for face
-                        cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255) if not access_granted else (0, 255, 0), 2)
-                        cv2.putText(frame, name, (left+6, bottom-6),
-                                    cv2.FONT_HERSHEY_COMPLEX, 1.0, (255, 255, 255), 1)
-
-                        # If a cue is in progress, display the current cue
-                        if current_cue:
-                            cv2.putText(frame, current_cue, (50, 50), 
-                                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
-
-            # Show the frame
-            cv2.imshow('Face Auth', frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
             attempts += 1
 
         cap.release()
-        cv2.destroyAllWindows()
-        print(f"Access denied for {target_name}")
-        return False
+        return {"success": False}
 
-
-
+        

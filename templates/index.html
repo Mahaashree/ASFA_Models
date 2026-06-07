@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,7 +32,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
+            background:
                 radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 40% 60%, rgba(120, 255, 198, 0.05) 0%, transparent 50%);
@@ -43,7 +44,7 @@
             backdrop-filter: blur(20px);
             border-radius: 24px;
             padding: 2.5rem;
-            box-shadow: 
+            box-shadow:
                 0 20px 40px rgba(0, 0, 0, 0.3),
                 0 0 0 1px rgba(255, 255, 255, 0.1),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -93,8 +94,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
         }
 
         .auth-section {
@@ -125,7 +133,7 @@
             outline: none;
             background: rgba(255, 255, 255, 0.12);
             transform: translateY(-2px);
-            box-shadow: 
+            box-shadow:
                 0 8px 25px rgba(0, 0, 0, 0.15),
                 0 0 0 3px rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.3);
@@ -147,7 +155,7 @@
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateY(0);
-            box-shadow: 
+            box-shadow:
                 0 8px 20px rgba(102, 126, 234, 0.3),
                 0 0 0 1px rgba(255, 255, 255, 0.1);
             position: relative;
@@ -172,7 +180,7 @@
 
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 
+            box-shadow:
                 0 12px 30px rgba(102, 126, 234, 0.4),
                 0 0 0 1px rgba(255, 255, 255, 0.2);
         }
@@ -199,6 +207,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -259,9 +268,20 @@
         }
 
         @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.1); }
-            100% { opacity: 1; transform: scale(1); }
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(1.1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .progress-bar {
@@ -286,8 +306,13 @@
         }
 
         @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
         }
 
         .progress-fill {
@@ -419,7 +444,7 @@
             font-size: 1.1rem;
             font-weight: 600;
             text-align: center;
-            box-shadow: 
+            box-shadow:
                 0 8px 25px rgba(255, 215, 0, 0.4),
                 0 0 0 1px rgba(255, 255, 255, 0.2);
             display: none;
@@ -436,6 +461,7 @@
                 opacity: 0;
                 transform: translateX(-50%) translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(-50%) translateY(0);
@@ -469,6 +495,7 @@
                 opacity: 0;
                 transform: scale(0.9);
             }
+
             to {
                 opacity: 1;
                 transform: scale(1);
@@ -502,31 +529,32 @@
                 padding: 2rem;
                 margin: 1rem;
             }
-            
+
             h1 {
                 font-size: 2.2rem;
             }
-            
+
             .step-indicator {
                 gap: 1rem;
             }
-            
+
             .step {
                 width: 40px;
                 height: 40px;
                 font-size: 1rem;
             }
-            
+
             #videoFeed {
                 height: 280px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Face Authentication</h1>
-        
+
         <div class="auth-section">
             <form id="authForm">
                 <div class="form-group">
@@ -543,7 +571,7 @@
                 2. Follow the on-screen cues<br>
                 3. Wait for verification to complete
             </div>
-            
+
             <div class="step-indicator">
                 <div class="step" id="step1">1</div>
                 <div class="step" id="step2">2</div>
@@ -569,7 +597,8 @@
                 Attempt: <span id="currentAttempt">1</span> / 3
             </div>
 
-            <button type="button" class="btn" id="cancelBtn" style="background: linear-gradient(135deg, #ff6b6b, #ee5a52);">Cancel</button>
+            <button type="button" class="btn" id="cancelBtn"
+                style="background: linear-gradient(135deg, #ff6b6b, #ee5a52);">Cancel</button>
         </div>
 
         <div id="result"></div>
@@ -614,10 +643,10 @@
             authInProgress = true;
             authBtn.disabled = true;
             authBtn.textContent = 'Authenticating...';
-            
+
             // Show camera section
             cameraSection.style.display = 'block';
-            
+
             // Reset UI elements
             result.textContent = '';
             result.className = '';
@@ -626,7 +655,7 @@
             cueOverlay.classList.remove('show');
             attemptCounter.style.display = 'block';
             currentAttempt.textContent = '1';
-            
+
             // Update status
             updateStatus('Connecting to camera...', false);
             updateStep(1);
@@ -634,16 +663,16 @@
             try {
                 // Start video feed
                 videoFeed.src = '/video_feed?' + new Date().getTime();
-                
+
                 // Simulate progress and status updates
                 let progress = 0;
                 let step = 1;
-                
+
                 progressInterval = setInterval(() => {
                     progress += Math.random() * 5;
                     if (progress > 100) progress = 100;
                     progressFill.style.width = progress + '%';
-                    
+
                     if (progress > 30 && step === 1) {
                         updateStatus('Face detection active', true);
                         updateStep(2);
@@ -663,18 +692,18 @@
                 // Make authentication request
                 const formData = new FormData();
                 formData.append('name', name);
-                
+
                 const response = await fetch('/authenticate', {
                     method: 'POST',
                     body: formData
                 });
 
                 const data = await response.json();
-                
+
                 clearInterval(progressInterval);
                 stopStatusPolling();
                 progressFill.style.width = '100%';
-                
+
                 if (data.success) {
                     showFinalResult(data.message, 'auth-success', '✓ Authentication Successful!');
                     updateStatus('Authentication successful!', true);
@@ -686,16 +715,16 @@
                 } else {
                     let resultClass = 'auth-failed';
                     let resultTitle = '✗ Authentication Failed';
-                    
+
                     if (data.message && data.message.toLowerCase().includes('spoof')) {
                         resultClass = 'spoof-detected';
                         resultTitle = '🚫 Spoof Detected!';
                     }
-                    
+
                     showFinalResult(data.message, resultClass, resultTitle);
                     updateStatus('Authentication failed', false);
                 }
-                
+
             } catch (error) {
                 clearInterval(progressInterval);
                 stopStatusPolling();
@@ -712,10 +741,10 @@
             if (progressInterval) clearInterval(progressInterval);
             if (statusInterval) clearInterval(statusInterval);
             stopStatusPolling();
-            
+
             // Send cancel request to backend
             fetch('/cancel_auth', { method: 'POST' });
-            
+
             showFinalResult('Authentication cancelled by user', 'auth-failed', '✗ Cancelled');
             resetAuthentication();
         }
@@ -727,12 +756,12 @@
             cameraSection.style.display = 'none';
             cueOverlay.classList.remove('show');
             attemptCounter.style.display = 'none';
-            
+
             // Reset steps
             document.querySelectorAll('.step').forEach(step => {
                 step.classList.remove('active', 'completed');
             });
-            
+
             // Stop video feed
             videoFeed.src = '';
         }
@@ -741,19 +770,19 @@
             // Poll for cues and status updates
             cueUpdateInterval = setInterval(async () => {
                 if (!authInProgress) return;
-                
+
                 try {
                     const response = await fetch('/get_status');
                     const data = await response.json();
-                    
+
                     if (data.cue) {
                         showCue(data.cue);
                     }
-                    
+
                     if (data.attempt) {
                         currentAttempt.textContent = data.attempt;
                     }
-                    
+
                     if (data.status) {
                         updateStatus(data.status, data.active || false);
                     }
@@ -773,7 +802,7 @@
         function showCue(cueMessage) {
             cueText.textContent = cueMessage;
             cueOverlay.classList.add('show');
-            
+
             // Hide cue after 3 seconds if no new cue comes in
             setTimeout(() => {
                 if (cueText.textContent === cueMessage) {
@@ -829,4 +858,28 @@
         });
     </script>
 </body>
+
+</html>
+if (!users.length) {
+container.innerHTML = '<div class="empty-state">No registered users yet.</div>';
+return;
+}
+
+const ul = document.createElement('ul');
+ul.className = 'users-list';
+users.forEach(u => {
+const li = document.createElement('li');
+li.innerHTML = `<span class="user-name">👤 ${u.name}</span><span class="user-badge">${u.access_level ||
+    'standard'}</span>`;
+ul.appendChild(li);
+});
+container.innerHTML = '';
+container.appendChild(ul);
+} catch (err) {
+container.innerHTML = '<div class="empty-state" style="color:#f5a0a8">Failed to load users.</div>';
+}
+}
+</script>
+</body>
+
 </html>

@@ -5,7 +5,7 @@ import cv2
 import threading
 import time
 import base64
-import os
+import os, uuid
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -392,14 +392,49 @@ def cancel_auth():
     
     return jsonify({"success": True, "message": "Authentication cancelled"})
 
-# Serve static files
-@app.route('/static/<filename>')
-def static_files(filename):
-    return app.send_static_file(filename)
+## ----- New API Endpoints -----
 
-if __name__ == '__main__':
-    # Ensure static directory exists
-    if not os.path.exists("static"):
-        os.makedirs("static")
-    
-    app.run(debug=True, threaded=True)
+@app.route('/users')
+def list_users():
+    """Return a JSON list of all registered users (name and access level)."""
+    db_utils = MongoDBUtils(MONGODB_URI)
+    users = list(db_utils.users_collection.find({}, {'_id': 0, 'name': 1, 'access_level': 1}))
+    return jsonify(users)
+
+@app.route('/register', methods=['POST'])
+def register_user():
+    """Register a new user via multipart/form-data.
+    Expected fields: 'name' (string) and 'image' (file).
+    """
+    name = request.form.get('name')
+    file = request.files.get('image')
+
+    if not name or not file:
+        return jsonify({"success": False,
+                        "message": "Both 'name' and 'image' are required."}), 400
+
+    # Save uploaded image to a temporary location
+    upload_dir = os.path.join('static', 'uploads')
+    os.makedirs(upload_dir, exist_ok=True)
+    filename = f"{uuid.uuid4().hex}{os.path.splitext(file.filename)[1]}"
+    img_path = os.path.join(upload_dir, filename)
+    file.save(img_path)
+
+    access_level = request.form.get('access_level', 'standard')
+    db_utils = MongoDBUtils(MONGODB_URI)
+    success = db_utils.register(name, img_path, access_level)
+
+    # Clean up uploaded file
+    try:
+        os.remove(img_path)
+    except OSError:
+        pass
+
+    if success:
+        return jsonify({"success": True,
+                        "message": f"User {name} registered successfully."})
+    else:
+        return jsonify({"success": False,
+                        "message": f"Failed to register {name}. It may already exist."}), 400
+
+# ----- End of new endpoints -----

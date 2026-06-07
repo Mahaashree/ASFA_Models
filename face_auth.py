@@ -62,9 +62,9 @@ class FaceAuth:
             }
         
         else:
-            print(f"{target_name} : User not found in database. Please register: ")
-            img_path = input("enter img path: ")
-            self.db_utils.register(target_name, img_path)
+            # User not found – authentication will later fail gracefully
+            print(f"{target_name} : User not found in database. Please register via the UI.")
+            return False
  
 
     def check_spoof (self, frame):

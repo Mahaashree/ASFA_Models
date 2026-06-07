@@ -1,196 +1,216 @@
-# 🔐 Advanced Face Authentication System
+# 🔐 ASFA — Advanced Secure Face Authentication
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
-[![OpenCV](https://img.shields.io/badge/OpenCV-4.8+-green.svg)](https://opencv.org)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.13+-orange.svg)](https://tensorflow.org)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://tensorflow.org)
+[![Flask](https://img.shields.io/badge/Flask-Web%20UI-lightgrey.svg)](https://flask.palletsprojects.com)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Database-green.svg)](https://mongodb.com)
+[![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-red.svg)](https://opencv.org)
 
-A sophisticated real-time face authentication system featuring multi-layer security with anti-spoofing detection, liveness verification, and facial recognition. Built for high-security applications requiring robust user verification.
-
-## 🌟 Key Features
-
-- **🎯 Multi-Layer Security**: Face recognition + Anti-spoofing + Liveness detection
-- **🛡️ Presentation Attack Detection**: Deep learning model to detect fake faces, printed photos, and video replays
-- **👁️ Interactive Liveness Verification**: Cue-based system ensuring real human presence
-- **💾 Scalable User Management**: MongoDB integration with secure encoding storage
-- **🖥️ Multiple Interfaces**: CLI and Web UI options
-- **⚡ Real-time Processing**: Optimized for live camera feed analysis
-- **🔧 Configurable Security**: Adjustable thresholds for different security requirements
-
-## 🛠️ Tech Stack
-
-| Component | Technology |
-|-----------|------------|
-| **Computer Vision** | OpenCV, face_recognition |
-| **Deep Learning** | TensorFlow/Keras |
-| **Database** | MongoDB |
-| **Backend** | Python 3.8+ |
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Python 3.8 or higher
-- MongoDB instance (local or cloud)
-- Webcam for live authentication
-
-### Installation
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/yourusername/face-auth-system.git
-cd face-auth-system
-```
-
-2. **Install dependencies**
-```bash
-pip install -r requirements.txt
-```
-
-3. **Set up environment variables**
-```bash
-# Create .env file
-echo "MONGODB_URI=mongodb://localhost:27017/" > .env
-```
-
-4. **Download required models**
-```bash
-# Place your antispoofing_full_model.h5 in models/ directory
-# Haar cascade is included with OpenCV
-```
-
-### Usage Options
-
-
-#### 💻 Flask Application
-```bash
-python app.py
-```
-
-#### 💻 Command Line Interface
-```bash
-python main.py
-```
-
-
-## 📋 System Architecture
-
-```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Camera Feed   │───▶│  Face Detection  │───▶│  Anti-Spoofing  │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-                                                         │
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│ Authentication  │◀───│ Face Recognition │◀───│ Liveness Check  │
-│    Result       │    │                  │    │                 │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-```
-
-## 🔒 Security Features
-
-### Multi-Layer Authentication Process
-
-1. **Face Detection**: Haar Cascade classifier locates faces in real-time
-2. **Anti-Spoofing**: Custom CNN model analyzes texture patterns to detect:
-   - Printed photographs
-   - Digital screen displays
-   - Video replay attacks
-   - 3D masks and other presentation attacks
-3. **Liveness Detection**: Interactive cue-based verification requiring user interaction
-4. **Face Recognition**: High-accuracy facial encoding comparison using state-of-the-art algorithms
-
-### Security Thresholds
-
-| Parameter | Default Value | Description |
-|-----------|---------------|-------------|
-| `spoof_threshold` | 0.4 | Anti-spoofing sensitivity |
-| `frame_history` | 20 | Frames analyzed for spoof detection |
-| `spoof_confidence` | 0.5 | Maximum allowed spoof ratio |
-| `recognition_tolerance` | 0.45 | Face matching strictness |
-
-## 📊 Performance Metrics
-
-- **Overall Accuracy**: 98.5%
-- **Model Size**: 12MB
-- **False Positive Rate**: < 0.8%
-- **False Negative Rate**: < 1.0%
-- **Anti-Spoofing Accuracy**: 97.5%
-- **Average Processing Time**: 150ms per frame
-- **Supported Users**: Unlimited (MongoDB scalable)
-
-## 🎬 Demo
-
-### Web Interface Screenshots
-![Web Interface](demo/web_interface.png)
-*Professional web interface with real-time authentication*
-
-### Authentication Flow
-![Auth Flow](demo/auth_flow.gif)
-*Complete authentication process demonstration*
-
-## 🔧 Configuration
-
-### Environment Variables
-```bash
-MONGODB_URI=your_mongodb_connection_string
-SPOOF_THRESHOLD=0.4
-FRAME_HISTORY=20
-MAX_ATTEMPTS=70
-```
-
-### Security Configuration
-```python
-# config/security_params.py
-class SecurityConfig:
-    SPOOF_THRESHOLD = 0.4      # Lower = stricter spoof detection
-    FRAME_HISTORY = 20         # Frames to analyze
-    SPOOF_CONFIDENCE = 0.5     # Max allowed spoof ratio
-    RECOGNITION_TOLERANCE = 0.45 # Face match strictness
-```
-
-## 🧪 Testing
-
-```bash
-# Run unit tests
-python -m pytest tests/
-
-# Test specific components
-python tests/test_face_auth.py
-python tests/test_anti_spoof.py
-```
-
-## 📈 Future Enhancements
-
-- [ ] **Multi-face Authentication**: Support for group access scenarios
-- [ ] **Voice Recognition**: Additional biometric layer
-- [ ] **Edge Deployment**: TensorFlow Lite optimization for mobile/edge devices
-- [ ] **API Integration**: RESTful API for third-party integrations
-- [ ] **Advanced Analytics**: User behavior analysis and anomaly detection
-- [ ] **Hardware Integration**: Support for specialized security cameras
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- OpenCV community for computer vision tools
-- face_recognition library by Adam Geitgey
-- TensorFlow team for deep learning framework
-- MongoDB for database solutions
-
-## 📞 Contact
-
-**Mahaashree Anburaj** - [mahaashreofficial@gmail.com](mailto:mahaashreeofficial@gmail.com)
-
+A real-time face authentication web application combining **passive CNN-based anti-spoofing** with an **active challenge-response liveness check**, backed by MongoDB for user management. Built with Flask and a modern dark-themed glassmorphism UI.
 
 ---
 
-⭐ **Star this repository if it helped you!**
+## 🌟 What It Does
+
+When a user attempts to authenticate:
+
+1. **Anti-Spoofing (Passive)** — A custom-trained CNN (`antispoofing_full_model.h5`) analyses each camera frame for texture patterns characteristic of fake faces — printed photos, screen replays, or masks.
+2. **Liveness Verification (Active)** — The user is prompted with random challenges (look left, look right, blink slowly, smile) detected via 68-point facial landmark analysis using dlib.
+3. **Face Recognition** — Once the face passes both checks, it is matched against stored `face_recognition` encodings in MongoDB.
+4. **Result** — A clear success, failure, or spoof-detected screen is shown with actionable guidance.
+
+---
+
+## 🏗️ Architecture
+
+![ASFA Hybrid Model Architecture](docs/architecture.png)
+
+*Hybrid model combining a MobileNetV2 CNN backbone, Transformer encoder, and Attention mechanisms for multi-task learning across liveness detection, face authentication, and facial landmark detection. The pipeline includes Post-Quantum Cryptography (PQC) for encrypted auth requests and a novel anti-spoofing module using frequency-domain analysis, micro-expression detection, and reflection analysis.*
+
+```
+Webcam
+  │
+  ▼
+Face Detection (Haar Cascade)
+  │
+  ├──▶ Anti-Spoofing CNN ──▶ Spoof? ──▶ 🚨 Deny + Explain
+  │         (frame resized to 160×160, normalised /255)
+  │
+  ├──▶ Liveness Cue Verification (dlib 68-pt landmarks)
+  │         └── look right / left / blink / smile (shuffled)
+  │
+  └──▶ Face Recognition (face_recognition encodings vs MongoDB)
+            └── Match? ──▶ ✅ Grant Access
+                       ──▶ ❌ Deny (up to N attempts)
+```
+
+---
+
+## 🖥️ Web UI
+
+Three-tab interface served at `http://localhost:5000`:
+
+| Tab | Function |
+|-----|----------|
+| 🔐 **Authenticate** | Live camera feed, real-time status overlay, cue prompts, result banner |
+| ➕ **Register** | Upload a photo + name to enrol a new user in MongoDB |
+| 👥 **View Users** | List all registered users and their access levels |
+
+**Spoof detected?** A persistent orange warning banner with a **"Try Authentication Again"** button stays on screen until the user dismisses it — they won't be accidentally timed out before they can read it.
+
+![Spoof Detection UI](docs/spoof_demo.png)
+
+---
+
+## ⚖️ Dataset Bias & Fairness
+
+Publicly available anti-spoofing benchmarks (e.g. MSU-MFSD, CASIA-FASD, Replay-Attack) are **heavily skewed** toward lighter skin tones and a narrow range of ethnicities, ages, and lighting conditions. Models trained solely on these datasets exhibit measurably higher false-positive rates for darker skin tones — a well-documented fairness problem in biometric AI.
+
+To address this:
+
+- **Custom dataset curated** — training data was sourced and balanced to include diverse skin tones, face shapes, and lighting environments, with deliberate over-representation of groups under-represented in standard benchmarks.
+- **Per-subgroup metric tracking** — performance was evaluated per demographic subgroup during training, not only in aggregate, to surface and reduce disparate error rates.
+- **Tunable thresholds** — `spoof_confidence` and `recognition_tolerance` are exposed as configurable parameters, allowing operators to calibrate FAR/FRR for their specific user population.
+
+> Addressing fairness bias in biometric AI is an ongoing process. If you observe systematic errors for specific conditions, please open an issue.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Web Framework | Flask (Python) |
+| Computer Vision | OpenCV, face_recognition |
+| Anti-Spoofing Model | TensorFlow / Keras (`.h5`, ~12 MB) |
+| Facial Landmarks | dlib + `shape_predictor_68_face_landmarks.dat` |
+| Database | MongoDB via pymongo |
+| Frontend | Vanilla HTML/CSS/JS — dark glassmorphism theme |
+
+---
+
+## 🚀 Setup
+
+### Prerequisites
+
+- Python 3.8+
+- MongoDB running locally (`localhost:27017`) or a MongoDB Atlas URI
+- A webcam
+
+### Install
+
+```bash
+git clone https://github.com/Mahaashree/ASFA_Models.git
+cd ASFA_Models
+
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+
+pip install -r requirements.txt
+```
+
+> ⚠️ **NumPy version matters.** TensorFlow 2.x requires NumPy `<2.0`. The `requirements.txt` pins `numpy==1.26.4`. If you see `AttributeError: _ARRAY_API not found`, run:
+> ```bash
+> pip install "numpy==1.26.4"
+> ```
+
+### Configure
+
+Create a `.env` file in the project root:
+
+```env
+MONGODB_URI=mongodb://localhost:27017/
+```
+
+### Run
+
+```bash
+./venv/bin/python app.py
+```
+
+Open **http://localhost:5000** in your browser.
+
+---
+
+## 📂 Project Structure
+
+```
+ASFA_Models/
+├── app.py                          # Flask application + authentication routes
+├── face_auth.py                    # Core FaceAuth class (spoof check, face recognition)
+├── cue_verification.py             # Active liveness: landmark-based cue detection
+├── db_utils.py                     # MongoDB helpers (register, fetch user encodings)
+├── main.py                         # Standalone CLI entry point
+├── models/
+│   ├── antispoofing_full_model.h5  # Custom CNN for presentation attack detection (~12 MB)
+│   └── haarcascade_frontalface_default.xml
+├── shape_predictor_68_face_landmarks.dat  # dlib 68-point landmark model
+├── templates/
+│   └── index.html                  # Single-page web UI (three-tab)
+├── docs/
+│   ├── architecture.png            # System architecture diagram
+│   └── spoof_demo.png              # Spoof detection UI screenshot
+├── static/                         # Captured auth frames saved here at runtime
+├── requirements.txt
+└── .env                            # MONGODB_URI (not committed)
+```
+
+---
+
+## 🔒 Security Parameters
+
+| Parameter | Default | Effect |
+|-----------|---------|--------|
+| `spoof_thresh` | `0.4` | CNN score below this = spoof frame |
+| `spoof_confidence` | `0.5` | If >50% of frames flagged as spoof → reject |
+| `frame_history` | `20` | Rolling window of frames evaluated |
+| `recognition_tolerance` | `0.45` | Lower = stricter face match (0–1) |
+| `required_matches` | `3` | Consecutive frame matches needed to grant access |
+| `max_attempts` | `1` (configurable) | Auth retries before final denial |
+
+---
+
+## 🌐 API Endpoints
+
+| Method | Route | Description |
+|--------|-------|-------------|
+| `GET` | `/` | Serve web UI |
+| `GET` | `/video_feed` | MJPEG camera stream |
+| `POST` | `/authenticate` | Run full auth for `name` (form field) |
+| `GET` | `/get_status` | Poll live auth status + current cue |
+| `POST` | `/cancel_auth` | Cancel in-progress authentication |
+| `GET` | `/users` | List all registered users |
+| `POST` | `/register` | Register user: fields `name` + `image` (file) |
+
+---
+
+## 🧩 Liveness Cues
+
+Cues are **randomly shuffled** each session. The user has **10 seconds** per cue; if time runs out, the system skips to the next one automatically so auth never gets permanently stuck.
+
+| Cue | Detection Method |
+|-----|----------------|
+| Look Right | Nose tip X > face centre X + 10px |
+| Look Left | Nose tip X < face centre X − 10px |
+| Blink Slowly | Eye Aspect Ratio < 0.3 for both eyes |
+| Smile | Mouth corner elevation + width ratio + flatness threshold |
+
+---
+
+## ⚠️ Known Limitations
+
+- **Single webcam only** — multi-camera setups not supported.
+- **Lighting sensitivity** — poor or back-lit environments can affect spoof detection; an ongoing calibration area given the custom dataset's focus on diverse conditions.
+- **Smile detection** — works reliably for neutral-to-wide smiles; subtle smiles may not register within the time window.
+- **No HTTPS** — run behind a reverse proxy (nginx + TLS) for any production deployment.
+- **Input resizing, not weight quantization** — each frame is cropped to the detected face region and resized to **160 × 160 px**, then normalised (`/255.0`) before being fed to the CNN. This is *input preprocessing*, not model quantization. The `.h5` weights remain at full float32 precision (~12 MB). No INT8/TFLite export is applied in this version.
+
+---
+
+## 📞 Contact
+
+**Mahaashree Anburaj** — [mahaashreeofficial@gmail.com](mailto:mahaashreeofficial@gmail.com)
+
+---
+
+> ⭐ Star this repo if you found it useful!
